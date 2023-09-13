@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Recipient {
+  id    String @id @default(uuid())
+  name  String
+  email String
+  NFe   NFe[]
+
+  @@map("recipients")
+}
+
+model Product {
+  id          String     @id @default(uuid())
+  code        String
+  description String
+  nfeItems    NFeItems[]
+
+  @@map("products")
+}
+
+model NFe {
+  id          String  @id @default(uuid())
+  recipientId String
+  number      Int
+  serie       Int
+  value       Decimal
+
+  recipient Recipient  @relation(fields: [recipientId], references: [id])
+  nfeItems  NFeItems[]
+
+  @@map("nfes")
+}
+
+model NFeItems {
+  id           String  @id @default(uuid())
+  productId    String  @map("product_id")
+  unitaryValue Decimal @map("unitary_value")
+  quantity     Decimal
+  totalValue   Decimal @map("total_value")
+  NFeId        String  @map("nfe_id")
+
+  product Product @relation(fields: [productId], references: [id])
+  nfe     NFe     @relation(fields: [NFeId], references: [id])
+
+  @@map("nfe_items")
+}

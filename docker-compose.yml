@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  microservices-db:
+    container_name: microservices-db    
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=${DATABASE_USER}
+      - POSTGRESQL_PASSWORD=${DATABASE_PASSWORD}
+      - PGDATA=/data/postgresql
+    volumes:
+      - ./database/pg:/data/postgresql      

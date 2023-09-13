@@ -1,0 +1,43 @@
+# @name nfe-create-recipient
+
+POST http://localhost:3334/recipient
+Content-Type: application/json
+
+{
+  "name": "Leandro Fernandes",
+  "email": "leo@gmail.com"
+}
+
+###
+
+# @name nfe-create-product
+
+POST http://localhost:3334/product
+Content-Type: application/json
+
+{
+  "code": "P1",
+  "description": "Produto de teste 1",
+  "salePrice": 50.00,
+  "stock": 25
+}
+
+###
+
+# @name nfe-create-nfe
+
+POST http://localhost:3334/nfe
+Content-Type: application/json
+
+{
+  "recipientId": "8063f77d-cf96-4a15-a977-e4202b0fc5ef",
+  "number": 1,
+  "serie": 1,
+  "value": 200.00,
+  "items": [{
+    "productId": "186e1e18-a68e-4c8d-8b31-15a65c5ab02e",
+    "unitaryValue": 50,
+    "quantity": 4,
+    "totalValue": 200
+  }]
+}

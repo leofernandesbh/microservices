@@ -1,0 +1,47 @@
+# @name purchase-create-customer
+
+POST http://localhost:3333/customer
+Content-Type: application/json
+
+{
+  "name": "Leandro Fernandes",
+  "email": "leo@gmail.com",
+  "password": "123456",
+  "phone": "(99)99999-9999"
+}
+
+###
+
+# @name purchase-create-product
+
+POST http://localhost:3333/product
+Content-Type: application/json
+
+{
+  "code": "P1",
+  "description": "Produto de teste 1",
+  "salePrice": 50.00,
+  "stock": 25
+}
+
+###
+
+# @name purchase-create-purchase
+
+POST http://localhost:3333/purchase
+Content-Type: application/json
+
+{
+  "customerId": "e6d8554d-0a61-4060-badc-47b70aa093ac",
+  "value": 200.00,
+  "items": [{
+    "productId": "8c62fa5f-852e-462d-8033-1dc937c71e78",
+    "quantity": 2,
+    "totalValue": 150
+  },
+  {
+    "productId": "b42be911-8898-4fc2-b91e-17ff69d0aa23",
+    "quantity": 1,
+    "totalValue": 50
+  }]
+}
