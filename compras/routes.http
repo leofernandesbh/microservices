@@ -1,25 +1,83 @@
+@hostname = localhost
+@port = 3333
+@host = {{hostname}}:{{port}}
+@customerId = 1e567e50-4dee-487b-bf70-27a9f45ca002
+@customerEmailSufix = {{$randomInt 1 1000}}
+@productIdA = 2e567e50-4dee-487b-bf70-27a9f45ca003
+@productIdB = 2e567e50-4dee-487b-bf70-27a9f45ca004
+@productCodeSufix = {{$randomInt 1 1000}}
+
+###
+
 # @name purchase-create-customer
 
-POST http://localhost:3333/customer
+POST http://{{host}}/customer
 Content-Type: application/json
 
 {
+  "id": "{{customerId}}",
   "name": "Leandro Fernandes",
-  "email": "leo@gmail.com",
+  "email": "leo{{customerEmailSufix}}@gmail.com",
   "password": "123456",
   "phone": "(99)99999-9999"
 }
 
 ###
 
-# @name purchase-create-product
+# @name purchase-create-customer-random
 
-POST http://localhost:3333/product
+POST http://{{host}}/customer
 Content-Type: application/json
 
 {
-  "code": "P1",
-  "description": "Produto de teste 1",
+  "id": "{{$guid}}",
+  "name": "Leandro Fernandes",
+  "email": "leo{{customerEmailSufix}}@gmail.com",
+  "password": "123456",
+  "phone": "(99)99999-9999"
+}
+
+###
+
+# @name purchase-create-product-1
+
+POST http://{{host}}/product
+Content-Type: application/json
+
+{
+  "id": "{{productIdA}}",
+  "code": "P{{productCodeSufix}}",
+  "description": "Produto de teste {{productCodeSufix}}",
+  "salePrice": 50.00,
+  "stock": 25
+}
+
+###
+
+# @name purchase-create-product-2
+
+POST http://{{host}}/product
+Content-Type: application/json
+
+{
+  "id": "{{productIdB}}",
+  "code": "P{{productCodeSufix}}",
+  "description": "Produto de teste {{productCodeSufix}}",
+  "salePrice": 50.00,
+  "stock": 25
+}
+
+###
+
+# @name purchase-create-product-random
+
+POST http://{{host}}/product
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "code": "P{{productCodeSufix}}",
+  "description": "Produto de teste {{productCodeSufix}}",
   "salePrice": 50.00,
   "stock": 25
 }
@@ -28,19 +86,19 @@ Content-Type: application/json
 
 # @name purchase-create-purchase
 
-POST http://localhost:3333/purchase
+POST http://{{host}}/purchase
 Content-Type: application/json
 
 {
-  "customerId": "e6d8554d-0a61-4060-badc-47b70aa093ac",
-  "value": 200.00,
+  "customerId": "{{customerId}}",
+  "value": 250.00,
   "items": [{
-    "productId": "8c62fa5f-852e-462d-8033-1dc937c71e78",
+    "productId": "{{productIdA}}",
     "quantity": 2,
-    "totalValue": 150
+    "totalValue": 100
   },
   {
-    "productId": "b42be911-8898-4fc2-b91e-17ff69d0aa23",
+    "productId": "{{productIdB}}",
     "quantity": 1,
     "totalValue": 50
   }]

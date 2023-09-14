@@ -1,6 +1,8 @@
 import { prisma } from "../infra/database/prisma-client"
+import { KafkaProducer } from "../infra/providers/kafka/producer"
 
 type CreateCustomerRequest = {
+  id: string
   name: string,
   email: string
   password: string
@@ -10,24 +12,43 @@ type CreateCustomerRequest = {
 export class CreateCustomerUseCase {
   constructor(){}
   
-  async execute({ name, email, password, phone }: CreateCustomerRequest) {
-    const customer = await prisma.customer.findFirst({
+  async execute({ id, name, email, password, phone }: CreateCustomerRequest) {
+    const customer = await prisma.customer.findFirst({      
       where: {
-        email
+        OR: [
+          {
+            id
+          },
+          {
+            email
+          }
+        ]
       }
+
     })
 
-    if (customer) {
-      throw new Error("Customer already exists")
-    }
+    let customerCreated
 
-    const customerCreated = await prisma.customer.create({
-      data: {
-        name,
-        email,
-        password,
-        phone
-      }
+    if (!customer) {
+      customerCreated = await prisma.customer.create({
+        data: {
+          id,
+          name,
+          email,
+          password,
+          phone
+        }
+      })
+    }else{
+      customerCreated = customer
+    }    
+
+    const kafkaProducer = new KafkaProducer()
+
+    await kafkaProducer.execute("customer-created", {
+      id: customerCreated.id,
+      name: customerCreated.name,
+      email: customerCreated.email
     })
 
     return customerCreated

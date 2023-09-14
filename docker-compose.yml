@@ -11,4 +11,4 @@ services:
       - POSTGRESQL_PASSWORD=${DATABASE_PASSWORD}
       - PGDATA=/data/postgresql
     volumes:
-      - ./database/pg:/data/postgresql      
+      - ./data/pg:/data/postgresql      

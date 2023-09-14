@@ -7,7 +7,6 @@ type CreateNFeRequest = {
   value: number
   items: {
     productId: string   
-    unitaryValue: number
     quantity: number
     totalValue: number
   }[]

@@ -2,6 +2,8 @@ import express from "express";
 import "dotenv/config";
 import { router } from "./infra/routes";
 
+import "./infra/providers/kafka/subscribe";
+
 const app = express()
 
 app.use(express.json())

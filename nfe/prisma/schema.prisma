@@ -11,19 +11,21 @@ datasource db {
 }
 
 model Recipient {
-  id    String @id @default(uuid())
-  name  String
-  email String
-  NFe   NFe[]
+  id            String @id @default(uuid())
+  integrationId String
+  name          String
+  email         String
+  NFe           NFe[]
 
   @@map("recipients")
 }
 
 model Product {
-  id          String     @id @default(uuid())
-  code        String
-  description String
-  nfeItems    NFeItems[]
+  id            String     @id @default(uuid())
+  integrationId String
+  code          String
+  description   String
+  nfeItems      NFeItems[]
 
   @@map("products")
 }
@@ -42,12 +44,11 @@ model NFe {
 }
 
 model NFeItems {
-  id           String  @id @default(uuid())
-  productId    String  @map("product_id")
-  unitaryValue Decimal @map("unitary_value")
-  quantity     Decimal
-  totalValue   Decimal @map("total_value")
-  NFeId        String  @map("nfe_id")
+  id         String  @id @default(uuid())
+  productId  String  @map("product_id")
+  quantity   Decimal
+  totalValue Decimal @map("total_value")
+  NFeId      String  @map("nfe_id")
 
   product Product @relation(fields: [productId], references: [id])
   nfe     NFe     @relation(fields: [NFeId], references: [id])

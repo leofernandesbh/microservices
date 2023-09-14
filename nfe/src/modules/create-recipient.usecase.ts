@@ -1,6 +1,7 @@
 import { prisma } from "../infra/database/prisma-client"
 
 type CreateRecipientRequest = {
+  integrationId: string,
   name: string,
   email: string  
 }
@@ -8,7 +9,7 @@ type CreateRecipientRequest = {
 export class CreateRecipientUseCase {
   constructor(){}
   
-  async execute({ name, email }: CreateRecipientRequest) {
+  async execute({ integrationId, name, email }: CreateRecipientRequest) {
     const recipient = await prisma.recipient.findFirst({
       where: {
         email
@@ -21,6 +22,7 @@ export class CreateRecipientUseCase {
 
     const recipientCreated = await prisma.recipient.create({
       data: {
+        integrationId,
         name,
         email,
       }

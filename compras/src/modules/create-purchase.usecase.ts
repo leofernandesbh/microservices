@@ -1,4 +1,5 @@
 import { prisma } from "../infra/database/prisma-client"
+import { KafkaProducer } from "../infra/providers/kafka/producer"
 
 type CreatePurchaseRequest = {
   customerId: string
@@ -22,6 +23,15 @@ export class CreatePurchaseUseCase {
           create: items
         }
       }
+    })
+
+    const kafkaProducer = new KafkaProducer()
+
+    await kafkaProducer.execute("new-purchase", {
+      id: purchase.id,
+      customerId: purchase.customerId,
+      value: purchase.value,
+      items
     })
     
     return purchase

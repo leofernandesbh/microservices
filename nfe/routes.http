@@ -4,6 +4,7 @@ POST http://localhost:3334/recipient
 Content-Type: application/json
 
 {
+  "integrationId": "8063f77d-cf96-4a15-a977-e4202b0fc5aa",
   "name": "Leandro Fernandes",
   "email": "leo@gmail.com"
 }
@@ -16,6 +17,7 @@ POST http://localhost:3334/product
 Content-Type: application/json
 
 {
+  "integrationId": "8063f77d-cf96-4a15-a977-e4202b0fc5bb",
   "code": "P1",
   "description": "Produto de teste 1",
   "salePrice": 50.00,
@@ -36,7 +38,6 @@ Content-Type: application/json
   "value": 200.00,
   "items": [{
     "productId": "186e1e18-a68e-4c8d-8b31-15a65c5ab02e",
-    "unitaryValue": 50,
     "quantity": 4,
     "totalValue": 200
   }]
